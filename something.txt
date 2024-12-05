@@ -1,0 +1,19 @@
+TRT-Plugin things
+插件形式的编译中，可能出现CMAKE中某些LINK库因为未被扫描到需求而未发生链接（ldd查看无目标链接库）
+此时应当使用 target_link_options(name PUBLIC "LINKER:-no-as-needed"),使指定库强行链接
+猜测这个情况可能是因为注册机制导致的问题，在使用 CMAKE 编译依赖 libtorch的库时也发生了这个现象
+  由于注册机制可以在不包含子类实现及头文件的情况下，仅使用父类头文件及实现库完成编译工作，可能因此导致运行时找不到子类实现但是编译及链接时没有问题（ldd也未出现 undefined symbol）的情况
+  该原因仅为猜测
+
+Plugin在各个阶段的运行顺序，针对orin trt8.5.2
+buildSerialize：
+  construct->suppor-check->clone->config->init->config->enqueue->terminate->destroy
+  需要注意从clone开始，执行的是clone后的对象
+  log中有很多重复的东西，可能内部有递归
+  因为这里对clone对象进行了init，因此不会有下面infer时的init问题
+  
+inference:
+  construct->init->clone->config->enqueue
+  需要注意，此时config开始，执行的对象是clone后的那个plugin
+  全部执行完毕，本engine需要释放时，clone对象destroy->原始对象terminate->原始对象destroy
+  因此如果clone时调用的构造有部分操作在init内，那么可能就会导致clone的和原始对象不同，发生未初始化带来的错误
