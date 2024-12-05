@@ -17,3 +17,5 @@ inference:
   需要注意，此时config开始，执行的对象是clone后的那个plugin
   全部执行完毕，本engine需要释放时，clone对象destroy->原始对象terminate->原始对象destroy
   因此如果clone时调用的构造有部分操作在init内，那么可能就会导致clone的和原始对象不同，发生未初始化带来的错误
+
+和网上部分说法可能不同的是，似乎initialize和teminate在调用内部有自关联，可能存在回调情况
