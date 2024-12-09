@@ -22,5 +22,5 @@ inference:
 configurePlugin方法可以用作部分运行时检查的手段
 support-format-combination这里可以用于engine内部中间张量（本plugin的输入输出等）格式、类型等的指定，这个指定可以限定engine build过程中对计算方案的选择范围，不让格式乱飘
 部分地方提示，检查设置时可能必须自小向大，不应该以比当前大的索引作为基准来检查自身，而应该以比当前小的索引作为基准检查
-
+部分可参考文档 https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#extending
 Tensor-setAllowedFormat 对内部中间张量不起作用，估计仅对engine输入输出进行设置时起作用
