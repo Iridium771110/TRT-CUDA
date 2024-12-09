@@ -19,3 +19,7 @@ inference:
   因此如果clone时调用的构造有部分操作在init内，那么可能就会导致clone的和原始对象不同，发生未初始化带来的错误
 
 和网上部分说法可能不同的是，似乎initialize和teminate在调用内部有自关联，可能存在回调情况
+configurePlugin方法可以用作部分运行时检查的手段
+support-format-combination这里可以用于engine内部中间张量（本plugin的输入输出等）格式、类型等的指定，这个指定可以限定engine build过程中对计算方案的选择范围，不让格式乱飘
+
+Tensor-setAllowedFormat 对内部中间张量不起作用，估计仅对engine输入输出进行设置时起作用
