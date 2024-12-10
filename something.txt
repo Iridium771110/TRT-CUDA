@@ -5,7 +5,7 @@ TRT-Plugin things
   由于注册机制可以在不包含子类实现及头文件的情况下，仅使用父类头文件及实现库完成编译工作，可能因此导致运行时找不到子类实现但是编译及链接时没有问题（ldd也未出现 undefined symbol）的情况
   该原因仅为猜测
 
-Plugin在各个阶段的运行顺序，针对orin trt8.5.2
+Plugin在各个阶段的运行顺序，针对orin trt10.5.0
 buildSerialize：
   construct->suppor-check->clone->config->init->config->enqueue->terminate->destroy
   需要注意从clone开始，执行的是clone后的对象
