@@ -24,3 +24,6 @@ support-format-combination这里可以用于engine内部中间张量（本plugin
 部分地方提示，检查设置时可能必须自小向大，不应该以比当前大的索引作为基准来检查自身，而应该以比当前小的索引作为基准检查
 部分可参考文档 https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#extending
 Tensor-setAllowedFormat 对内部中间张量不起作用，估计仅对engine输入输出进行设置时起作用
+builder = createInferBuilder() 似乎会存在一定的内存泄漏（存疑，数量还不小，cpu内存），delete builder之后内存没有相应减小
+plugin选择数据类型应该由输入输出描述子来直接获取而不是一个op attr
+
