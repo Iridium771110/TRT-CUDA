@@ -1,0 +1,36 @@
+set(CMAKE_BUILD_TYPE RELEASE)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CUDA_FLAGS "-Xcompiler -fPIC ${CMAKE_CUDA_FLAGS}\
+                    -gencode arch=compute_86,code=compute_86 -std=c++17")
+
+cmake_minimum_required(VERSION 3.16)
+project(torch_op)
+enable_language(CXX CUDA)
+
+set(INCLUDE_PATHS include/
+                /usr/local/cuda-11.4/include/
+                /usr/include/aarch64-linux-gnu/
+)
+set(LINK_LIBS /usr/local/cuda-11.4/lib64/libcudart.so
+)
+set(PYBIND_SRC src/op_test.cc
+                src/op_test.cu
+                torch_app/torch_op_test.cc
+)
+list(APPEND CMAKE_PREFIX_PATH "/root/miniforge3/envs/fdpose/lib/python3.8/site-packages/torch")
+find_package(Torch REQUIRED)
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+find_package(pybind11 REQUIRED PATHS /root/miniforge3/envs/fdpose/lib/python3.8/site-packages/pybind11
+			 NO_DEFAULT_PATH)
+set(PYBIND11_CPP_STANDARD -std=c++17)
+
+pybind11_add_module(customOps ${PYBIND_SRC})
+target_include_directories(customOps PRIVATE ${INCLUDE_PATHS} ${TORCH_INCLUDE_DIRS})
+target_link_libraries(customOps PRIVATE ${LINK_LIBS} ${TORCH_LIBRARIES} pybind11::module 
+                        /root/miniforge3/envs/fdpose/lib/libpython3.8.so
+                        /root/miniforge3/envs/fdpose/lib/python3.8/site-packages/torch/lib/libtorch_python.so)
+target_compile_definitions(customOps PRIVATE TORCH_EXTENSION_NAME=customOps)
+
+message(********* ${TORCH_INCLUDE_DIRS})
+message(********* ${TORCH_LIBRARIES})
