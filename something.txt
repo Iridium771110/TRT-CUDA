@@ -27,3 +27,6 @@ Tensor-setAllowedFormat 对内部中间张量不起作用，估计仅对engine�
 builder = createInferBuilder() 似乎会存在一定的内存泄漏（存疑，数量还不小，cpu内存），delete builder之后内存没有相应减小
 plugin选择数据类型应该由输入输出描述子来直接获取而不是一个op attr
 
+高版本如 10.5 存在对attention的图优化算子融合等操作，实际用于Superglue时发现cross-attention部分会造成大比例精度问题（并且部分帧结果不稳定，在两三种结果间跳变）怀疑存在bug
+涉及norm类型的layer时，half的精度可能不够，在SuperPoint中发生build-engine时若打开fp16，有时norm部分（pow、sum等节点）全部会选择half，会导致严重的精度问题（输出0、nan等），选择float时结果正确
+build-engine应当注意对格式的指定，防止部分莫名其妙错误
