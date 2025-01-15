@@ -1,0 +1,5 @@
+
+
+sudo docker commit fe1bd070fa0c ros-noetic-img:cu118
+
+sudo docker run -it --privileged --network=host --gpus all --memory 10000M --name ros-noetic-cu118 -e DISPLAY -e TERM -e QT_X11_NO_MITSHM=1 -v /home/dong/tmp_support:/root/workspace ros-noetic-img:cu118 bash
