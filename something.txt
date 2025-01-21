@@ -30,3 +30,6 @@ plugin选择数据类型应该由输入输出描述子来直接获取而不是�
 高版本如 10.5 存在对attention的图优化算子融合等操作，实际用于Superglue时发现cross-attention部分会造成大比例精度问题（并且部分帧结果不稳定，在两三种结果间跳变）怀疑存在bug
 涉及norm类型的layer时，half的精度可能不够，在SuperPoint中发生build-engine时若打开fp16，有时norm部分（pow、sum等节点）全部会选择half，会导致严重的精度问题（输出0、nan等），选择float时结果正确
 build-engine应当注意对格式的指定，防止部分莫名其妙错误
+
+注意一些预编译指令的配套使用，可能会发生奇怪位置的段错误
+比如 #pragma pack(x) <--> #pragma pack()应配对使用
