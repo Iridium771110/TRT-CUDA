@@ -3,3 +3,19 @@
 sudo docker commit fe1bd070fa0c ros-noetic-img:cu118
 
 sudo docker run -it --privileged --network=host --gpus all --memory 10000M --name ros-noetic-cu118 -e DISPLAY -e TERM -e QT_X11_NO_MITSHM=1 -v /home/dong/tmp_support:/root/workspace ros-noetic-img:cu118 bash
+
+若出现 runtime 找不到nvidia或者无效
+在/etc/docker/daemon.json添加
+"runtimes": {
+"nvidia": {
+"path": "/usr/bin/nvidia-container-runtime",
+"runtimeArgs": []
+}
+}
+
+docker应当考虑将默认存储文件夹挂在大数据盘上
+在/etc/docker/daemon.json添加
+"data-root": "path"
+
+orin上启动
+sudo docker run -it --rm --net=host --runtime nvidia -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp/.X11-unix nvcr.io/nvidia/l4t-jetpack:r35.3.1
