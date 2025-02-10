@@ -19,3 +19,5 @@ docker应当考虑将默认存储文件夹挂在大数据盘上
 
 orin上启动
 sudo docker run -it --rm --net=host --runtime nvidia -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp/.X11-unix nvcr.io/nvidia/l4t-jetpack:r35.3.1
+
+和宿主机共享网络以后，配置主从机ros-ip的时候直接使用宿主机ip即可
