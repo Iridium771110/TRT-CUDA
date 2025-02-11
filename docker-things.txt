@@ -23,3 +23,11 @@ sudo docker run -it --rm --net=host --runtime nvidia -e DISPLAY=$DISPLAY -v /tmp
 和宿主机共享网络以后，配置主从机ros-ip的时候直接使用宿主机ip即可
 export ROS_MASTER_URI=http://主机ip:11311
 export ROS_HOSTNAME=宿主ip
+
+如果本地不存在jetson相关nvidia源，添加jetson相关源
+deb https://repo.download.nvidia.com/jetson/common r35.1 main
+deb https://repo.download.nvidia.com/jetson/t234 r35.1 main
+deb https://repo.download.nvidia.com/jetson/ffmpeg r35.1 main
+以后 gpg key 的更新
+sudo apt-key adv --fetch-key https://repo.download.nvidia.com/jetson/jetson-ota-public.asc
+之后正常 apt update
