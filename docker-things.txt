@@ -31,3 +31,39 @@ deb https://repo.download.nvidia.com/jetson/ffmpeg r35.1 main
 以后 gpg key 的更新
 sudo apt-key adv --fetch-key https://repo.download.nvidia.com/jetson/jetson-ota-public.asc
 之后正常 apt update
+
+关于 jetson orin 上面的docker，如果一开始的docker没有驱动支持的，或者发生一系列 PTX-JIT not found, trt出现no implement 等遇到cuda文件可编译不可执行的情况
+参考安装
+FROM balenalib/jetson-xavier-ubuntu:bionic
+ENV DEBIAN_FRONTEND noninteractive
+WORKDIR /usr/src/app
+
+# nvidia-l4t-core is a dependency for the rest
+# of the packages, and is designed to be installed directly
+# on the target device. This because it parses /proc/device-tree
+# in the deb's .preinst script. Looks like we can bypass it though:
+RUN \
+    echo "deb https://repo.download.nvidia.com/jetson/common r32.4 main" >> /etc/apt/sources.list && \
+    echo "deb https://repo.download.nvidia.com/jetson/t194 r32.4 main" >> /etc/apt/sources.list && \
+    apt-key adv --fetch-key http://repo.download.nvidia.com/jetson/jetson-ota-public.asc && \
+    mkdir -p /opt/nvidia/l4t-packages/ && \
+    touch /opt/nvidia/l4t-packages/.nv-l4t-disable-boot-fw-update-in-preinstall && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends nvidia-l4t-core
+    apt-get install --no-install-recommends -y \
+    nvidia-l4t-firmware \
+    nvidia-l4t-multimedia-utils \
+    nvidia-l4t-multimedia \
+    nvidia-l4t-cuda \
+    nvidia-l4t-x11 \
+    nvidia-l4t-camera \
+    nvidia-l4t-tools \
+    nvidia-l4t-graphics-demos \
+    nvidia-l4t-gstreamer \
+    nvidia-l4t-jetson-io \
+    nvidia-l4t-configs \
+    nvidia-l4t-3d-core \
+    nvidia-l4t-oem-config
+
+ENV UDEV=1
+CMD ["bash"]
