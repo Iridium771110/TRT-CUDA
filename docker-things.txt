@@ -67,3 +67,14 @@ RUN \
 
 ENV UDEV=1
 CMD ["bash"]
+若runtime=nvidia没有作用，/dev下的设备缺失nv设备，可以使用宿主机设备挂载方式
+docker run -it --name XX \
+    --device /dev/nvidia0:/dev/nvidia0 \
+    --device /dev/nvidia1:/dev/nvidia1 \
+    --device /dev/nvidia2:/dev/nvidia2 \
+    --device /dev/nvidia3:/dev/nvidia3 \
+    --device /dev/nvidiactl:/dev/nvidiactl \
+    --device /dev/nvidia-uvm:/dev/nvidia-uvm \
+    -v /pathto/nvidia:/usr/local/nvidia \
+    -e LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64 \
+    image_id /bin/bash
