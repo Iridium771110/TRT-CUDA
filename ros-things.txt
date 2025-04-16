@@ -1,3 +1,6 @@
 subscriber 的 callback 函数可以绑定参数
 使用boost::bind的时候，似乎会发生普通函数的参数传递行为，因此绑定时如果参数值需要外传，应当使用指针形式进行传递。
 引用形式似乎由于boost::bind的绑定行为已经发生了参数值传递行为，导致内部改动无法外传。
+
+kazam 录屏以后若windows不支持，这需要 apt 安装 ffmpeg
+ffmpeg -y -i realsense.mp4 -c:v libx264 -c:a aac -strict experimental -tune fastdecode -pix_fmt yuv420p -b:a 192k -ar 48000 realsense_win.mp4
