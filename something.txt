@@ -33,3 +33,5 @@ build-engine应当注意对格式的指定，防止部分莫名其妙错误
 
 注意一些预编译指令的配套使用，可能会发生奇怪位置的段错误
 比如 #pragma pack(x) <--> #pragma pack()应配对使用
+
+要分析 DLA，请在使用 NVIDIA Nsight Systems CLI 时添加 --accelerator-trace nvmedia 标志
