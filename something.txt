@@ -35,3 +35,5 @@ build-engine应当注意对格式的指定，防止部分莫名其妙错误
 比如 #pragma pack(x) <--> #pragma pack()应配对使用
 
 要分析 DLA，请在使用 NVIDIA Nsight Systems CLI 时添加 --accelerator-trace nvmedia 标志
+
+tensorrt和onnx 对于卷积的权重排布方式为 G-co-ci-kkk
