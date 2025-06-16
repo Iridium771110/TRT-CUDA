@@ -1,0 +1,30 @@
+{
+    "test_status" : true,
+    "engines" : [
+        {
+            "eng_name" : "test_trt",
+            "net_path" : "/home/dong/WS/test/eng_test/backbone_test/eng_file/occ_backbone_test.net",
+            "eng_path" : "/home/dong/WS/test/eng_test/backbone_test/eng_file/occ_backbone_test_s8.eng",
+            "rebuild" : true,
+            "build_type" : "int8",
+            "fallback_type" : "float16",
+            "dla" : -1,
+            "gpu" : 0,
+            "inputs" :[
+                {"name" : "A",
+                "shape" : [1, 3, 336, 672],
+                "type" : "float",
+                "file_path" : "/home/dong/WS/FoundationPose/onnx_tools/occ_backbone_test_input.bin"
+                }
+            ],
+            "outputs" :[
+                {"name" : "out_fea",
+                "shape" : [1, 64, 84, 168],
+                "type" : "float",
+                "file_path" : "/home/dong/WS/FoundationPose/onnx_tools/occ_backbone_test_output.bin"
+                }
+            ],
+            "test_check_dim" : 0
+        }
+    ]
+}

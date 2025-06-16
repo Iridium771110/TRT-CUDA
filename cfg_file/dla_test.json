@@ -1,0 +1,31 @@
+{
+    "test_status" : true,
+    "engines" : [
+        {
+            "eng_name" : "test_trt_dla",
+            "net_path" : "/home/yjy/docker_ws/dla_test/dla_test.net",
+            "eng_path" : "/home/yjy/docker_ws/dla_test/dla_test_.eng",
+            "rebuild" : false,
+            "dla" : 1,
+            "gpu" : 0,
+            "sync_type" : 2,
+            "build_type" : "float16",
+            "fallback_type" : "float16",
+            "inputs" :[
+                {"name" : "A'",
+                "shape" : [1, 4, 512, 512],
+                "type" : "float",
+                "file_path" : "/home/yjy/docker_ws/dla_test/dla_test_input.bin"
+                }
+            ],
+            "outputs" :[
+                {"name" : "out_fea'",
+                "shape" : [1, 32, 16, 16],
+                "type" : "float",
+                "file_path" : "/home/yjy/docker_ws/dla_test/dla_test_output.bin"
+                }
+            ],
+            "test_check_dim" : 1
+        }
+    ]
+}

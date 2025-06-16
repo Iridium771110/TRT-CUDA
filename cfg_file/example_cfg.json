@@ -1,0 +1,38 @@
+{
+    "test_status" : true,
+    "engines" : [
+        {
+            "eng_name" : "test_trt",
+            "net_path" : "/home/dong/WS/test/eng_test/trt/test_net.net",
+            "eng_path" : "/home/dong/WS/test/eng_test/trt/test_net_f32.eng",
+            "rebuild" : false,
+            "dla" : -1,
+            "gpu" : 0,
+            "inputs" :[
+                {"name" : "A",
+                "shape" : [84, 6, 160, 160],
+                "type" : "float",
+                "file_path" : "/home/dong/WS/FoundationPose/test_1st_input_a.bin"
+                },
+                {"name" : "onnx::Concat_1",
+                "shape" : [84, 6, 160, 160],
+                "type" : "float",
+                "file_path" : "/home/dong/WS/FoundationPose/test_1st_input_b.bin"
+                }
+            ],
+            "outputs" :[
+                {"name" : "412",
+                "shape" : [84, 3],
+                "type" : "float",
+                "file_path" : "/home/dong/WS/FoundationPose/test_1st_output_trans.bin"
+                },
+                {"name" : "529",
+                "shape" : [84, 3],
+                "type" : "float",
+                "file_path" : "/home/dong/WS/FoundationPose/test_1st_output_rot.bin"
+                }
+            ],
+            "test_check_dim" : 1
+        }
+    ]
+}
