@@ -44,3 +44,4 @@ https://developer.nvidia.com/embedded/jetson-linux-r3541
 LDGDEPBAR 该barrier和 cp.async.commit_group 似乎是强绑定，但是对延迟的影响待定
 block内共享内存超出48k需要使用动态共享内存设置
 共享内存进行矢量操作时，似乎会出现随机冲突（指分次采样结果均不同），尤其是16字节操作时。但是进行4字节操作时不会出现冲突，即使bank已经对齐，该问题也可能由于首地址错位/错误而产生，需要经过理论位置排查
+8threads 同一全局地址的boardcast会导致 uncoalse L2 和 uncoalse shared，类似于冲突和全局不对齐的行为，因此需要考虑将其均匀分布，减少同一全局位置的广播（在LDGSTS中证实存在这一现象）
