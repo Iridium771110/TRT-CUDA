@@ -1,3 +1,9 @@
+有些情况下release模式会产生莫名其妙的错误，往往来自于一些不起眼的warning，在激进优化模式下出现了离奇的问题，常见于不明原因的死循环、段错误等等。
+因而至少应当在编译选项中添加 如
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=return-type")
+set(CMAKE_CUDA_FLAGS "-Xcompiler -Werror=return-type -fPIC ${CMAKE_CUDA_FLAGS}\
+                    -gencode arch=compute_89,code=sm_89 -std=c++17")
+
 TRT-Plugin things
 插件形式的编译中，可能出现CMAKE中某些LINK库因为未被扫描到需求而未发生链接（ldd查看无目标链接库）
 此时应当使用 target_link_options(name PUBLIC "LINKER:-no-as-needed"),使指定库强行链接
