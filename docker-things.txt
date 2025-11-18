@@ -31,6 +31,7 @@ deb https://repo.download.nvidia.com/jetson/ffmpeg r35.1 main
 以后 gpg key 的更新
 sudo apt-key adv --fetch-key https://repo.download.nvidia.com/jetson/jetson-ota-public.asc
 之后正常 apt update
+jetpack6-ubuntu22.04 考虑使用 r36.4
 
 关于 jetson orin 上面的docker，如果一开始的docker没有驱动支持的，或者发生一系列 PTX-JIT not found, trt出现no implement 等遇到cuda文件可编译不可执行的情况
 参考安装
