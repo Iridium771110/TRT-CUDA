@@ -43,6 +43,9 @@ build-engine应当注意对格式的指定，防止部分莫名其妙错误
 要分析 DLA，请在使用 NVIDIA Nsight Systems CLI 时添加 --accelerator-trace nvmedia 标志
 
 tensorrt和onnx 对于卷积的权重排布方式为 G-co-ci-kkk
+MatMul 的输入当是一个常量参数时，排布方式为习惯性的矩阵排列（无特殊变换的正常矩阵顺序）
+Gemm 的乘加常数矩阵的排列方式也是习惯性正常矩阵顺序
+
 关于部分源文件的下载（BSP）
 https://developer.nvidia.com/embedded/jetson-linux-r3541
 
