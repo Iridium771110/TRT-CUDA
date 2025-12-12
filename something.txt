@@ -66,3 +66,15 @@ L1与shared处于同一位置，理论上共享同一资源空间，因此行为
 cp.async.cg 单元长度只能是16字节，.ca可以是4,8字节
 grid的x/y/z的顺序，以及数值调配上，似乎会对L2命中率产生极大的影响，而这一命中率对于流水线操作、降低访存延迟等似乎有重要作用（在调试qkv-extract-from-posembed中，在orin上被证实的现象），这可能同时需要在kernel内及启动参数上对线程任务、束任务、块任务的划分上进行调整，与Nv的缓存策略有关，比较玄学，可以考虑尝试并总结经验，当前认为主要关注点应当是grid的调整，并且关注由之产生的内存事务分配，亦可能与SM上驻留的blocks它们的任务范围是否连续合理有关。
 根据现象判断，异步流水可以隐藏延迟，但是同时多warp驻留也可以隐藏延迟，当warp足够时仅通过切换就可以达到类似的效果，因此有时候异步流水的作用并不能体现。
+
+关于Blackwell
+根据手册存在TPC（两个SM组成的协作组，可以互相访问私有存储空间，据称能有效降低访存压力），TMA等专用设备线的开设，看起来用途很不错。
+关于cuda13-trt10.13+
+int8量化依旧可以使用隐式量化（setdynamicrange），但是fp8级别的量化需要采用显式量化的形式才能识别
+权重的量化形式的输入需要经过QDQ，然后在conv中以setinput input1的形式输入，Q节点应当指定outputtype为FP8,DQ节点应当与conv节点数据类型一致（包括bias，bias不必经过量化节点）
+在per-channel量化时，QDQ节点需要指定轴 setaxis否则会报错
+识别一个quantconv需要input路加QDQ，weight路加QDQ，输出不必QDQ，即五个节点会被识别为quantconv
+若设置networkdefinitioncreationflag::kSTRONGLY_TYPED，此时表示各节点将会严格按照节点type设置，--fp16等宽泛精度设置将会变成冲突项（报错or失效）
+实测不设置上述选项也可以进行FP8量化
+kernel-fusion的水平更进一步的提升
+从kernel命名上看，mha的算法形式应当和前作系列一致（10.3），但是在thor上由于硬件的提升而获得了性能上长足的进步
