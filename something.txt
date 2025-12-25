@@ -78,9 +78,10 @@ int8量化依旧可以使用隐式量化（setdynamicrange），但是fp8级别�
 权重的量化形式的输入需要经过QDQ，然后在conv中以setinput input1的形式输入，Q节点应当指定outputtype为FP8,DQ节点应当与conv节点数据类型一致（包括bias，bias不必经过量化节点）
 在per-channel量化时，QDQ节点需要指定轴 setaxis否则会报错
 识别一个quantconv需要input路加QDQ，weight路加QDQ，输出不必QDQ，即五个节点会被识别为quantconv
+显式量化在实际操作中有可能造成计算图的分裂？目前观察到e4m3后面会多出现一个cast函数。并且有的conv在e4m3上的速度还不如f16，也存在明显的local mem操作。
 若设置networkdefinitioncreationflag::kSTRONGLY_TYPED，此时表示各节点将会严格按照节点type设置，--fp16等宽泛精度设置将会变成冲突项（报错or失效）
 实测不设置上述选项也可以进行FP8量化
 kernel-fusion的水平更进一步的提升
-从kernel命名上看，mha的算法形式应当和前作系列一致（10.3），但是在thor上由于硬件的提升而获得了性能上长足的进步
+从kernel命名上看，mha的算法形式应当和前作系列一致（10.3），但是在thor上由于硬件的提升而获得了性能上长足的进步（或许有大部分是硬件相关的软件指令升级？）
 
 kernel，TC，Cuda的手写情况，特点及体感需要实际尝试后总结，看起来会有很多新特点，有更高的操作空间。目测TMA存在和之前ldg类似的swizzle操作，但是可能有不同的限制和通信、唤起和同步需求
