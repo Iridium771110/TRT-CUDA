@@ -52,6 +52,9 @@ Gemm 的乘加常数矩阵的排列方式也是习惯性正常矩阵顺序
 关于部分源文件的下载（BSP）
 https://developer.nvidia.com/embedded/jetson-linux-r3541
 
+各种架构下的一些算力数据可以参考
+https://zhuanlan.zhihu.com/p/1954509899213018693 后面的一系列附图
+
 在矢量操作、tensorcore等操作中，尤其是当指令操作为长字段，但是操作数仅能给首寄存器的时候（注意SASS操作数和PTX操作数之间存在一定的区别，PTX更灵活，寄存器不需要连续，可以编译时重排列），数据存储时的寄存器顺序应当连续，非连续寄存器会导致寄存器间数据移动，产生大量不必要开销（显著的IMAD，MOV类型指令，在大kernel占用率不高的情况下，产生显著的 no instruction stall）
 LDGDEPBAR 该barrier和 cp.async.commit_group 似乎是强绑定，但是对延迟的影响待定
 block内共享内存超出48k需要使用动态共享内存设置
