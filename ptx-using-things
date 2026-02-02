@@ -6,7 +6,8 @@ https://docs.nvidia.com/cuda/parallel-thread-execution/index.html#tcgen05-mma-in
 --hopper--
 
 --blackwell--
-TMA：直接的tensor mem
+TMA：直接的tensor mem access
+参考位置：https://docs.nvidia.com/cuda/parallel-thread-execution/index.html#data-movement-and-conversion-instructions-tensor-copy
 asm volatile (
       "cp.async.bulk.tensor.3d.cta_group::2.shared::cluster.global.mbarrier::complete_tx::bytes.L2::cache_hint"
       " [%0], [%1, {%3, %4, %5}], [%2], %6;"
@@ -21,3 +22,6 @@ asm volatile (
       : "r"(smem_int_ptr), "l"(gmem_int_desc), "r"(smem_int_mbar),
         "r"(crd0), "r"(crd1), "r"(crd2), "r"(crd3), "l"(cache_hint)
       : "memory");
+
+Tensor Memory：指tensorcore独有的存储空间
+由于ampere的ptx在blackwell上一样可以编译运行，猜测tensorcore兼容了正常寄存器和独有存储空间，或者中间存在搬运过程
