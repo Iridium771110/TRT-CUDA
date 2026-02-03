@@ -24,4 +24,4 @@ asm volatile (
       : "memory");
 
 Tensor Memory：指tensorcore独有的存储空间
-由于ampere的ptx在blackwell上一样可以编译运行，猜测tensorcore兼容了正常寄存器和独有存储空间，或者中间存在搬运过程
+由于ampere的ptx在blackwell上一样可以编译运行，猜测tensorcore兼容了正常寄存器和独有存储空间，因为LDSM后可以直接出现HMMA，没有中间转换搬运
