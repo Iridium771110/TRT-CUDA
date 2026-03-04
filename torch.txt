@@ -1,0 +1,13 @@
+pip3 install https://github.com/ultralytics/assets/releases/download/v0.0.0/torch-2.5.0a0+872d972e41.nv24.08-cp310-cp310-linux_aarch64.whl
+
+pip3 install https://github.com/ultralytics/assets/releases/download/v0.0.0/torchvision-0.20.0a0+afc54f7-cp310-cp310-linux_aarch64.whl
+
+apt-get -y install libcusparselt0 libcusparselt-dev
+
+apt-get install libopenblas-dev
+
+pip3 install --force-reinstall -v "numpy==1.25.2"
+
+pip3 install opencv-python==4.5.4.60
+
+ref: https://www.yahboom.net/public/upload/upload-html/1745397767/YOLO%20environment%20construction.html
