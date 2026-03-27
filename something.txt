@@ -6,6 +6,7 @@ echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/microsoft.gpg] https://package
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=return-type")
 set(CMAKE_CUDA_FLAGS "-Xcompiler -Werror=return-type -fPIC ${CMAKE_CUDA_FLAGS}\
                     -gencode arch=compute_89,code=sm_89 -std=c++17")
+link——libraries的时候，有时候莫名其妙的会有undefined symbol。实测中出现 link中添加 ${TORCH_LIBRARIES},引发自定义函数的函数符号发生变化，在引入自定义库的时候，导致头文件在当前编译组中编译出的函数符号与在编译自定义库时编译出的函数符号不一致，引发undefined symbol。原因不明，仅作记录
 
 TRT-Plugin things
 插件形式的编译中，可能出现CMAKE中某些LINK库因为未被扫描到需求而未发生链接（ldd查看无目标链接库）
