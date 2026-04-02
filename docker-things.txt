@@ -79,3 +79,6 @@ docker run -it --name XX \
     -v /pathto/nvidia:/usr/local/nvidia \
     -e LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64 \
     image_id /bin/bash
+
+某些情况下，tensorrt的某些版本在容器内会发生意外错误，比如 tactic insufficient memory这一类问题，在jetson设备的容器内尤其有可能。
+网传官方解法为，改变tensorrt版本，或者在容器外进行engine构建
