@@ -16,6 +16,8 @@ sudo docker run -it --privileged --network=host --gpus all --memory 10000M --nam
 docker应当考虑将默认存储文件夹挂在大数据盘上
 在/etc/docker/daemon.json添加
 "data-root": "path"
+但是docker的挂载位置所处的设备格式应当为ext4, 因此在必要的时候应该进行格式化操作将所需磁盘的具体空间格式化至ext4
+否则可能出现各种异常，如容器过于巨大，层与层之间多次重复加载，apt无法使用，overlay问题，mount问题等
 
 orin上启动
 sudo docker run -it --rm --net=host --runtime nvidia -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp/.X11-unix nvcr.io/nvidia/l4t-jetpack:r35.3.1
