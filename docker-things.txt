@@ -84,3 +84,5 @@ docker run -it --name XX \
 
 某些情况下，tensorrt的某些版本在容器内会发生意外错误，比如 tactic insufficient memory这一类问题，在jetson设备的容器内尤其有可能。
 网传官方解法为，改变tensorrt版本，或者在容器外进行engine构建
+
+--entrypoint /bin/bash 可以覆盖进入点，从而使docker run 的容器不会自动随主进程退出，可进行 exec 进入容器
