@@ -9,6 +9,7 @@ set(CMAKE_CUDA_FLAGS "-Xcompiler -Werror=return-type -fPIC ${CMAKE_CUDA_FLAGS}\
 link——libraries的时候，有时候莫名其妙的会有undefined symbol。实测中出现 link中添加 ${TORCH_LIBRARIES},引发自定义函数的函数符号发生变化，在引入自定义库的时候，导致头文件在当前编译组中编译出的函数符号与在编译自定义库时编译出的函数符号不一致，引发undefined symbol。原因不明，仅作记录
 
 TRT-Plugin things
+当应用标准库中定义的插件时，应当先全局使用 initLibNvinferPlugins(nvinfer1::ILogger*, "") 函数进行初始化加载，否则将无法识别到标准插件
 插件形式的编译中，可能出现CMAKE中某些LINK库因为未被扫描到需求而未发生链接（ldd查看无目标链接库）
 此时应当使用 target_link_options(name PUBLIC "LINKER:-no-as-needed"),使指定库强行链接
 猜测这个情况可能是因为注册机制导致的问题，在使用 CMAKE 编译依赖 libtorch的库时也发生了这个现象
