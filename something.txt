@@ -2,6 +2,7 @@ curl -sS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sud
 echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/microsoft.list
 
 memcpyasync 在 device to host 时，若host为非锁页内存（pageable），则会触发隐式同步。host to host 必然触发同步，其它情况下为异步
+在使用cudagraph时，launch接口所处循环中加入cout以后会发生运行速度拖慢很多的情况，从profile看整个launch接口的运行时间明显变长，原因未知
 
 有些情况下release模式会产生莫名其妙的错误，往往来自于一些不起眼的warning，在激进优化模式下出现了离奇的问题，常见于不明原因的死循环、段错误等等。
 因而至少应当在编译选项中添加 如
