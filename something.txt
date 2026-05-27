@@ -1,6 +1,8 @@
 curl -sS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg
 echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/microsoft.list
 
+量化的cos误差 ===有说法 cos 0.991 业界认为是 production-lossless
+
 memcpyasync 在 device to host 时，若host为非锁页内存（pageable），则会触发隐式同步。host to host 必然触发同步，其它情况下为异步
 在使用cudagraph时，launch接口所处循环中加入cout以后会发生运行速度拖慢很多的情况，从profile看整个launch接口的运行时间明显变长（10%），但是对于短graph似乎现象并不显著，并且呈现出明显的不稳定波动现象。原因可能为host侧flush行为冲刷了指令、数据缓存等（？AI总结，不一定对）
 --cuda-graph-trace=node 采样结果中，部分kernel的运行时间会明显变长（如最大的gemm）
