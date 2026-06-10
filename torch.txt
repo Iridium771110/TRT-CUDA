@@ -11,3 +11,6 @@ pip3 install --force-reinstall -v "numpy==1.25.2"
 pip3 install opencv-python==4.5.4.60
 
 ref: https://www.yahboom.net/public/upload/upload-html/1745397767/YOLO%20environment%20construction.html
+
+torch module 在加载预训练权重以后出现一个异常现象，在外部封装中，走init内进行 self.xxx.forward()时输出的结果，与走 forward内进行 self.xxx.forward()时输出的结果有显著差异。
+根据onnx存下来的数据及内部代码观察，init内进行的保留的数据更像是重新初始化以后的数据（std 标准差和初始化标准差一致），而forward内进行的保留的数据是预训练的权重数据（包括某些算子的初始化数据）
