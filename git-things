@@ -1,0 +1,6 @@
+使用sparse clone的方式，只拉取仓库部分文件、目录的方式：确认 Git 版本 >= 2.25
+git clone --filter=blob:none --no-checkout <repo-url>
+cd <repo-name>
+git sparse-checkout init --cone
+git sparse-checkout set <path/to/subdir>
+git checkout
