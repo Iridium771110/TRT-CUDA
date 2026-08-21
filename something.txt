@@ -54,6 +54,8 @@ trt10.3在orin上可能存在一些未知的bug，在升级成10.7之后会解�
 实测已知 10.3、10.7存在以下问题（应当是未良好支持的op导致的类似bug的现象）：
   cumsum算子将导致大量的mov-add op，因其本身为顺序累加型操作。因此导致了严重的kernel数目激增，严重影响性能
 实测 transformer attention结构中，动态shape计算在onnx转换tensorrt时有概率出现数值偏差（类型问题导致），使其最终结果偏差极大。该结构的 除 根号d 这一scale操作应当采用固定shape直接定值的方式，此时结果正常。
+实测当onnx出现 gatherelements 时，tensorrt转换的运算结果有大偏差，切割后结果正常，此处应当考虑自定义op
+TRT的 TF32 默认模式将在敏感情况下导致精度偏差（attn结构明显）
 
 注意一些预编译指令的配套使用，可能会发生奇怪位置的段错误
 比如 #pragma pack(x) <--> #pragma pack()应配对使用
